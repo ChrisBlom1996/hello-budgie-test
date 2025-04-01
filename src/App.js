@@ -1,37 +1,74 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import HomePage from './components/HomePage';
-import './App.css';
+import { AppBar, Toolbar, Typography, Container, Box } from '@mui/material';
+import CardComponent from './components/CardComponent';
 
 // Temporary Second Page Component
 const SecondPage = () => {
   return (
-    <div className="second-page">
-      <h1>Second Page</h1>
-      <p>This is the second page. We’ll build it next!</p>
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        bgcolor: '#f5f5f5',
+        p: 4,
+      }}
+    >
+      <Typography variant="h6" sx={{ color: '#333' }}>
+        Second Page
+      </Typography>
+      <Typography variant="body1" sx={{ color: '#666' }}>
+        This is the second page. We’ll build it next!
+      </Typography>
+    </Box>
   );
 };
 
-// Wrapper to use useNavigate in HomePage
-const HomePageWrapper = () => {
+// Wrapper to add navigation to CardComponent
+const CardComponentWrapper = () => {
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate('/second-page');
   };
 
-  return <HomePage onNavigate={handleNavigate} />;
+  return <CardComponent onNavigate={handleNavigate} />;
 };
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<HomePageWrapper />} />
-          <Route path="/second-page" element={<SecondPage />} />
-        </Routes>
-      </div>
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        {/* Toolbar at the top */}
+        <AppBar position="static" color="default" elevation={1}>
+          <Toolbar>
+            <Typography variant="h6" sx={{ fontWeight: 600, color: '#333' }}>
+              Add a component
+            </Typography>
+          </Toolbar>
+        </AppBar>
+
+        {/* Main content area */}
+        <Container
+          maxWidth="sm"
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            bgcolor: '#f5f5f5',
+            py: 4,
+          }}
+        >
+          <Routes>
+            <Route path="/" element={<CardComponentWrapper />} />
+            <Route path="/second-page" element={<SecondPage />} />
+          </Routes>
+        </Container>
+      </Box>
     </Router>
   );
 }
