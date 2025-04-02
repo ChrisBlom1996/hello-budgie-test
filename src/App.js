@@ -57,10 +57,11 @@ function App() {
             flex: 1,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
+            justifyContent: 'flex-start', // Top-align the card
             alignItems: 'center',
             bgcolor: '#f5f5f5',
-            py: 4,
+            pt: 2, // Small padding-top to create minimal space below the toolbar
+            pb: 4, // Keep some padding-bottom for spacing at the bottom
           }}
         >
           <Routes>
