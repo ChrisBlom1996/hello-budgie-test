@@ -25,7 +25,7 @@ const CardComponent = ({ onNavigate }) => {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" sx={{ fontWeight: 600, color: '#333' }}>
+          <Typography variant="h6" sx={{ fontWeight: 600, color: '#333', fontSize: '16px' }}>
             Add a component
           </Typography>
         </Toolbar>
@@ -48,7 +48,8 @@ const CardComponent = ({ onNavigate }) => {
         <Card
           sx={{
             width: '100%',
-            borderRadius: 2,
+            borderRadius: 2, // 8px
+            border: '1px solid rgba(0, 0, 0, 0.12)', // 1px border
             boxShadow: 1,
             backgroundColor: '#fff',
             '&:hover': { transform: 'scale(1.02)', transition: 'transform 0.2s ease' },
@@ -57,31 +58,23 @@ const CardComponent = ({ onNavigate }) => {
         >
           <CardContent
             sx={{
-              padding: { xs: 1, sm: 1.2 },
-              '&:last-child': { paddingBottom: { xs: 1, sm: 1.2 } },
+              padding: 2, // 16px
+              '&:last-child': { paddingBottom: 2 }, // Ensure consistent padding
             }}
           >
             {/* First Line: Icon, Title, and Arrow */}
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                width: '100%',
-                px: 1,
-                py: 0.5,
-              }}
-            >
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
               <ViewAgendaOutlinedIcon
                 sx={{
                   fontSize: { xs: 32, sm: 32 },
                   color: '#666',
-                  mr: 1,
+                  mr: 1.25, // 10px
                 }}
               />
               <Typography
                 variant="h6"
                 sx={{
-                  fontSize: { xs: '1rem', sm: '1.1rem' },
+                  fontSize: { xs: '16px', sm: '16px' },
                   fontWeight: 500,
                   color: '#333',
                   flex: 1,
@@ -105,8 +98,8 @@ const CardComponent = ({ onNavigate }) => {
               sx={{
                 fontSize: { xs: '0.7rem', sm: '0.8rem' },
                 color: '#666',
-                mt: 0.2,
-                ml: 2,
+                mt: 1.25, // 10px
+                ml: 0, // Align with the icon (no extra margin since CardContent handles padding)
               }}
             >
               Interactive animated slider with navigation

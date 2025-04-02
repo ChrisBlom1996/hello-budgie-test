@@ -49,7 +49,7 @@ const SecondPage = () => {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1, color: '#fff' }}>
+          <Typography variant="h6" sx={{ flexGrow: 1, color: '#fff',fontSize:'16px'  }}>
             New Section
           </Typography>
           <IconButton onClick={handleClose} sx={{ color: '#fff' }}>
