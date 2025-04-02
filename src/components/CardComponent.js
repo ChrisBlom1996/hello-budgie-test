@@ -22,10 +22,18 @@ const CardComponent = ({ onNavigate }) => {
         }}
       >
         {/* First Line: Icon, Title, and Arrow */}
-        <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+            px: 1, 
+            py: 0.5,
+          }}
+        >
           <ViewAgendaOutlinedIcon
             sx={{
-              fontSize: { xs: 20, sm: 24 },
+              fontSize: { xs: 32, sm: 32 },
               color: '#666',
               mr: 1,
             }}
@@ -33,7 +41,7 @@ const CardComponent = ({ onNavigate }) => {
           <Typography
             variant="h6"
             sx={{
-              fontSize: { xs: '1rem', sm: '1.1rem' },
+              fontSize: { xs: '16px', sm: '16px' },
               fontWeight: 500,
               color: '#333',
               flex: 1,
@@ -44,7 +52,9 @@ const CardComponent = ({ onNavigate }) => {
           <IconButton sx={{ p: 0, mr: 0.5 }} onClick={onNavigate}>
             <ArrowForwardIosIcon
               sx={{
-                fontSize: { xs: '0.9rem', sm: '1rem' },
+                fontSize: { xs: '1.3rem', sm: '1.3rem' },
+                pt: '10px',
+                mr: '15px',
                 color: '#42a5f5',
               }}
             />
@@ -58,7 +68,7 @@ const CardComponent = ({ onNavigate }) => {
             fontSize: { xs: '0.7rem', sm: '0.8rem' },
             color: '#666',
             mt: 0.2,
-            ml: 3.5,
+            ml: 2, // Align with the icon's left edge (accounting for Box padding)
           }}
         >
           Interactive animated slider with navigation

@@ -13,7 +13,7 @@ const SecondPage = () => {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '100vh',
-        bgcolor: '#f5f5f5',
+        bgcolor: '#efefef',
         p: 4,
       }}
     >
@@ -42,7 +42,14 @@ function App() {
     <Router>
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         {/* Toolbar at the top */}
-        <AppBar position="static" color="default" elevation={1}>
+        <AppBar
+          position="static"
+          elevation={0} // Remove default elevation shadow
+          sx={{
+            backgroundColor: '#fff', // Explicitly set white background
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', // Drop-shadow effect
+          }}
+        >
           <Toolbar>
             <Typography variant="h6" sx={{ fontWeight: 600, color: '#333' }}>
               Add a component
@@ -57,11 +64,11 @@ function App() {
             flex: 1,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-start', // Top-align the card
+            justifyContent: 'flex-start',
             alignItems: 'center',
-            bgcolor: '#f5f5f5',
-            pt: 2, // Small padding-top to create minimal space below the toolbar
-            pb: 4, // Keep some padding-bottom for spacing at the bottom
+            bgcolor: '#efefef',
+            pt: 2,
+            pb: 4,
           }}
         >
           <Routes>
