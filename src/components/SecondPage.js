@@ -46,10 +46,11 @@ const SecondPage = () => {
         sx={{
           backgroundColor: '#3C8DA9',
           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+          padding: '5px'
         }}
       >
         <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1, color: '#fff',fontSize:'16px'  }}>
+          <Typography variant="h6" sx={{ flexGrow: 1, color: '#fff', fontSize: '16px', fontWeight: '700' }}>
             New Section
           </Typography>
           <IconButton onClick={handleClose} sx={{ color: '#fff' }}>
@@ -65,13 +66,14 @@ const SecondPage = () => {
           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
           px: 2,
           py: 1,
+          padding: '14px'
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton onClick={handleBack} sx={{ p: 0, mr: 1 }}>
-            <ArrowBackIosIcon sx={{ color: '#333', fontSize: '1.2rem' }} />
+            <ArrowBackIosIcon sx={{ color: '#3C8DA9', fontSize: '1.2rem' }} />
           </IconButton>
-          <Typography variant="h6" sx={{ fontWeight: 500, color: '#333' }}>
+          <Typography variant="h6" sx={{ fontWeight: 500, color: '#333', fontSize: '16px', fontWeight: '700' }}>
             Cards
           </Typography>
         </Box>
@@ -96,7 +98,8 @@ const SecondPage = () => {
             key={index}
             sx={{
               width: '100%',
-              borderRadius: 2,
+              borderRadius: 2, // 8px
+              border: '1px solid rgba(0, 0, 0, 0.12)', // 1px border
               boxShadow: 1,
               backgroundColor: '#fff',
               mb: 1,
@@ -106,19 +109,19 @@ const SecondPage = () => {
           >
             <CardContent
               sx={{
-                padding: { xs: 1, sm: 1.2 },
-                '&:last-child': { paddingBottom: { xs: 1, sm: 1.2 } },
+                padding: 2, // 16px
+                '&:last-child': { paddingBottom: 2 }, // Ensure consistent padding
                 display: 'flex',
                 alignItems: 'center',
               }}
             >
               {React.cloneElement(card.icon, {
-                sx: { fontSize: { xs: 20, sm: 24 }, color: '#666', mr: 1 },
+                sx: { fontSize: { xs: 32, sm: 32 }, color: '#666', mr: 1.25 }, // 10px gap
               })}
               <Typography
                 variant="h6"
                 sx={{
-                  fontSize: { xs: '1rem', sm: '1.1rem' },
+                  fontSize: { xs: '16px', sm: '16px' }, // Match first page
                   fontWeight: 500,
                   color: '#333',
                   flex: 1,

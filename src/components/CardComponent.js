@@ -25,7 +25,7 @@ const CardComponent = ({ onNavigate }) => {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" sx={{ fontWeight: 600, color: '#333', fontSize: '16px' }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, color: '#333', fontSize: '16px' }}>
             Add a component
           </Typography>
         </Toolbar>
