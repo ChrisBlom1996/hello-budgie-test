@@ -116,12 +116,12 @@ const SecondPage = () => {
               }}
             >
               {React.cloneElement(card.icon, {
-                sx: { fontSize: { xs: 32, sm: 32 }, color: '#666', mr: 1.25 }, // 10px gap
+                sx: { fontSize: { xs: 32, sm: 32 }, color: '#666', mr: 1.25 }, 
               })}
               <Typography
                 variant="h6"
                 sx={{
-                  fontSize: { xs: '16px', sm: '16px' }, // Match first page
+                  fontSize: { xs: '16px', sm: '16px' }, 
                   fontWeight: 500,
                   color: '#333',
                   flex: 1,
@@ -133,7 +133,7 @@ const SecondPage = () => {
                 <ArrowForwardIosIcon
                   sx={{
                     fontSize: { xs: '0.9rem', sm: '1rem' },
-                    color: '#42a5f5',
+                    color: '#3C8DA9',
                   }}
                 />
               </IconButton>
