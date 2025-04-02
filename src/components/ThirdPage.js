@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   AppBar,
@@ -10,19 +10,271 @@ import {
   Card,
   CardContent,
   Button,
+  Modal,
+  TextField,
+  Menu,
+  MenuItem,
+  Backdrop,
 } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
 import SettingsIcon from '@mui/icons-material/Settings';
-import ShareIcon from '@mui/icons-material/Share'; // Added for share button
+import ShareIcon from '@mui/icons-material/Share';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import AddIcon from '@mui/icons-material/Add';
+import ColorizeIcon from '@mui/icons-material/Colorize'; // Eyedropper icon
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { SketchPicker } from 'react-color'; // Color picker
+
+// Custom ImageCard component to manage each card and its editor
+const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
+  const [cogAnchorEl, setCogAnchorEl] = useState(null);
+  const [ellipsisAnchorEl, setEllipsisAnchorEl] = useState(null);
+  const [editingTitle, setEditingTitle] = useState(false);
+
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: card.title,
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      onTitleChange(card.id, html);
+    },
+    editable: editingTitle,
+  });
+
+  const handleCogClick = (event) => {
+    setCogAnchorEl(event.currentTarget);
+  };
+
+  const handleCogClose = () => {
+    setCogAnchorEl(null);
+  };
+
+  const handleEllipsisClick = (event) => {
+    setEllipsisAnchorEl(event.currentTarget);
+  };
+
+  const handleEllipsisClose = () => {
+    setEllipsisAnchorEl(null);
+  };
+
+  const handleTitleEdit = () => {
+    setEditingTitle(true);
+  };
+
+  const handleTitleSave = () => {
+    setEditingTitle(false);
+  };
+
+  const handleNextPage = () => {
+    console.log('Navigate to the next page');
+  };
+
+  return (
+    <Card
+      sx={{
+        width: '100%',
+        borderRadius: 2,
+        border: '1px solid rgba(0, 0, 0, 0.12)',
+        boxShadow: 1,
+        backgroundColor: '#fff',
+        mb: 1,
+      }}
+    >
+      {/* Top Bar */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          px: 2,
+          py: 1,
+          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton sx={{ p: 0, mr: 1 }} onClick={handleCogClick}>
+            <SettingsIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
+          </IconButton>
+          <Menu
+            anchorEl={cogAnchorEl}
+            open={Boolean(cogAnchorEl)}
+            onClose={handleCogClose}
+          >
+            <MenuItem onClick={handleCogClose}>Option 1</MenuItem>
+            <MenuItem onClick={handleCogClose}>Option 2</MenuItem>
+            <MenuItem onClick={handleCogClose}>Option 3</MenuItem>
+          </Menu>
+          <IconButton sx={{ p: 0, mr: 1 }} onClick={() => onDuplicate(card.id)}>
+            <ContentCopyIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
+          </IconButton>
+          <IconButton sx={{ p: 0 }} onClick={() => onDelete(card.id)}>
+            <DeleteIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
+          </IconButton>
+        </Box>
+        <IconButton sx={{ p: 0 }} onClick={handleEllipsisClick}>
+          <MoreVertIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
+        </IconButton>
+        <Menu
+          anchorEl={ellipsisAnchorEl}
+          open={Boolean(ellipsisAnchorEl)}
+          onClose={handleEllipsisClose}
+        >
+          <MenuItem onClick={handleEllipsisClose}>Settings</MenuItem>
+          <MenuItem onClick={() => onDuplicate(card.id)}>Duplicate</MenuItem>
+          <MenuItem onClick={() => onDelete(card.id)}>Delete</MenuItem>
+        </Menu>
+      </Box>
+
+      {/* Image Upload Section */}
+      <Box
+        sx={{
+          backgroundColor: '#efefef',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          py: 4,
+        }}
+      >
+        <IconButton>
+          <CameraAltIcon sx={{ fontSize: '3rem', color: '#666' }} />
+        </IconButton>
+      </Box>
+
+      {/* Content Section */}
+      <CardContent
+        sx={{
+          padding: 2,
+          '&:last-child': { paddingBottom: 2 },
+          position: 'relative',
+        }}
+      >
+        <Typography
+          variant="overline"
+          sx={{
+            fontSize: '0.7rem',
+            color: '#666',
+            fontWeight: 500,
+            display: 'block',
+          }}
+        >
+          {card.subtitle}
+        </Typography>
+        {editingTitle ? (
+          <Box sx={{ mb: 1 }}>
+            <Box sx={{ border: '1px solid #ddd', borderRadius: 1, mb: 1 }}>
+              <Box sx={{ borderBottom: '1px solid #ddd', p: 1 }}>
+                <IconButton
+                  onClick={() => editor.chain().focus().toggleBold().run()}
+                  sx={{ p: 0.5 }}
+                >
+                  <Typography variant="body2" sx={{ fontWeight: editor.isActive('bold') ? 'bold' : 'normal' }}>
+                    B
+                  </Typography>
+                </IconButton>
+                <IconButton
+                  onClick={() => editor.chain().focus().toggleItalic().run()}
+                  sx={{ p: 0.5 }}
+                >
+                  <Typography variant="body2" sx={{ fontStyle: editor.isActive('italic') ? 'italic' : 'normal' }}>
+                    I
+                  </Typography>
+                </IconButton>
+                <IconButton
+                  onClick={() => editor.chain().focus().toggleUnderline().run()}
+                  sx={{ p: 0.5 }}
+                >
+                  <Typography variant="body2" sx={{ textDecoration: editor.isActive('underline') ? 'underline' : 'none' }}>
+                    U
+                  </Typography>
+                </IconButton>
+              </Box>
+              <EditorContent editor={editor} />
+            </Box>
+            <Button
+              variant="contained"
+              size="small"
+              sx={{ mt: 1, backgroundColor: '#42a5f5', color: '#fff' }}
+              onClick={handleTitleSave}
+            >
+              Save
+            </Button>
+          </Box>
+        ) : (
+          <Typography
+            variant="h6"
+            sx={{
+              fontSize: '16px',
+              fontWeight: 700,
+              color: '#333',
+              mt: 0.5,
+              cursor: 'pointer',
+            }}
+            onClick={handleTitleEdit}
+          >
+            <span dangerouslySetInnerHTML={{ __html: card.title }} />
+          </Typography>
+        )}
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: '0.8rem',
+            color: '#666',
+            mt: 0.5,
+          }}
+        >
+          {card.description}
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: '0.8rem',
+            color: '#666',
+            mt: 0.5,
+          }}
+        >
+          {card.text}
+        </Typography>
+        <IconButton
+          sx={{
+            position: 'absolute',
+            bottom: 16,
+            right: 16,
+          }}
+          onClick={handleNextPage}
+        >
+          <ArrowForwardIosIcon sx={{ fontSize: '0.9rem', color: '#42a5f5' }} />
+        </IconButton>
+      </CardContent>
+    </Card>
+  );
+};
 
 const ThirdPage = () => {
   const navigate = useNavigate();
+
+  // State for cards
+  const [cards, setCards] = useState([
+    {
+      id: 1,
+      subtitle: 'REPREHENDERIT',
+      title: 'Quis autem vel',
+      description: 'lure reprehenderit qui in ea voluptate',
+      text: 'velit esse quam nihil molestiae consequatur',
+    },
+  ]);
+
+  // State for modal and settings
+  const [modalOpen, setModalOpen] = useState(false);
+  const [backgroundColor, setBackgroundColor] = useState('#6a1b9a'); // Default purple
+  const [textColor, setTextColor] = useState('#000000'); // Default black
+  const [showBackgroundPicker, setShowBackgroundPicker] = useState(false);
+  const [showTextPicker, setShowTextPicker] = useState(false);
 
   const handleBack = () => {
     navigate('/second-page');
@@ -34,22 +286,76 @@ const ThirdPage = () => {
 
   const handleNextPage = () => {
     console.log('Navigate to the next page');
-    // Add navigation to the next page here if needed
   };
 
   const handleSave = () => {
     console.log('Save button clicked');
-    // Add save functionality here if needed
   };
 
   const handleShare = () => {
-    console.log('Share button clicked');
-    // Add share functionality here if needed
+    if (navigator.share) {
+      navigator.share({
+        title: 'Image Cards',
+        text: 'Check out my image cards!',
+        url: window.location.href,
+      })
+        .then(() => console.log('Share successful'))
+        .catch((error) => console.log('Share failed:', error));
+    } else {
+      console.log('Web Share API not supported');
+    }
   };
 
   const handleSettings = () => {
-    console.log('Settings button clicked');
-    // Add settings functionality here if needed
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setShowBackgroundPicker(false);
+    setShowTextPicker(false);
+  };
+
+  const handleCameraClick = () => {
+    console.log('Camera button clicked - implement camera functionality here');
+    // Placeholder for camera functionality
+  };
+
+  const handleBackgroundColorChange = (color) => {
+    setBackgroundColor(color.hex);
+  };
+
+  const handleTextColorChange = (color) => {
+    setTextColor(color.hex);
+  };
+
+  const handleDuplicate = (cardId) => {
+    const cardToDuplicate = cards.find((card) => card.id === cardId);
+    const newCard = { ...cardToDuplicate, id: cards.length + 1 };
+    setCards([...cards, newCard]);
+  };
+
+  const handleDelete = (cardId) => {
+    setCards(cards.filter((card) => card.id !== cardId));
+  };
+
+  const handleAddCard = () => {
+    const newCard = {
+      id: cards.length + 1,
+      subtitle: 'REPREHENDERIT',
+      title: 'Quis autem vel',
+      description: 'lure reprehenderit qui in ea voluptate',
+      text: 'velit esse quam nihil molestiae consequatur',
+    };
+    setCards([...cards, newCard]);
+  };
+
+  const handleTitleChange = (cardId, newTitle) => {
+    setCards(
+      cards.map((card) =>
+        card.id === cardId ? { ...card, title: newTitle } : card
+      )
+    );
   };
 
   return (
@@ -101,7 +407,187 @@ const ThirdPage = () => {
         </Box>
       </Box>
 
-      {/* Card */}
+      {/* Modal for Cog Button */}
+      <Modal
+        open={modalOpen}
+        onClose={handleModalClose}
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          sx: { backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.6)' }, // Stronger blur and darker overlay
+        }}
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '90%',
+            maxWidth: 400,
+            bgcolor: '#fff',
+            borderRadius: 2,
+            boxShadow: 24,
+            p: 3,
+          }}
+        >
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Typography variant="h6" sx={{ fontSize: '16px', fontWeight: '700', color: '#333' }}>
+              Content Banner Settings
+            </Typography>
+            <IconButton onClick={handleModalClose}>
+              <CloseIcon sx={{ color: '#42a5f5' }} />
+            </IconButton>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+            <Box
+              sx={{
+                width: 40,
+                height: 40,
+                bgcolor: '#efefef',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                mr: 2,
+                borderRadius: 1,
+              }}
+            >
+              <CameraAltIcon sx={{ color: '#666' }} />
+            </Box>
+            <Typography variant="body2" sx={{ color: '#333', flexGrow: 1 }}>
+              hero-background.png
+            </Typography>
+            <IconButton sx={{ ml: 1 }}>
+              <DeleteIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
+            </IconButton>
+          </Box>
+          <Typography variant="overline" sx={{ fontSize: '0.7rem', color: '#666', display: 'block', mb: 1 }}>
+            IMAGE
+          </Typography>
+          <TextField
+            fullWidth
+            variant="outlined"
+            size="small"
+            placeholder="Select an image"
+            InputProps={{
+              startAdornment: (
+                <Box
+                  sx={{
+                    bgcolor: '#000',
+                    p: 1,
+                    mr: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    borderRadius: '4px 0 0 4px',
+                  }}
+                >
+                  <CameraAltIcon sx={{ color: '#fff', fontSize: '1rem' }} onClick={handleCameraClick} />
+                </Box>
+              ),
+            }}
+            sx={{ mb: 2 }}
+          />
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+            <Box sx={{ width: '48%' }}>
+              <Typography variant="overline" sx={{ fontSize: '0.7rem', color: '#666', display: 'block', mb: 1 }}>
+                BACKGROUND COLOUR
+              </Typography>
+              <TextField
+                fullWidth
+                variant="outlined"
+                size="small"
+                value={backgroundColor}
+                onChange={(e) => setBackgroundColor(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <Box
+                      sx={{
+                        width: 20,
+                        height: 20,
+                        bgcolor: backgroundColor,
+                        mr: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <ColorizeIcon
+                        sx={{ color: '#fff', fontSize: '1rem', cursor: 'pointer' }}
+                        onClick={() => setShowBackgroundPicker(!showBackgroundPicker)}
+                      />
+                    </Box>
+                  ),
+                }}
+              />
+              {showBackgroundPicker && (
+                <Box sx={{ position: 'absolute', zIndex: 2 }}>
+                  <SketchPicker
+                    color={backgroundColor}
+                    onChangeComplete={handleBackgroundColorChange}
+                  />
+                </Box>
+              )}
+            </Box>
+            <Box sx={{ width: '48%' }}>
+              <Typography variant="overline" sx={{ fontSize: '0.7rem', color: '#666', display: 'block', mb: 1 }}>
+                TEXT COLOUR
+              </Typography>
+              <TextField
+                fullWidth
+                variant="outlined"
+                size="small"
+                value={textColor}
+                onChange={(e) => setTextColor(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <Box
+                      sx={{
+                        width: 20,
+                        height: 20,
+                        bgcolor: textColor,
+                        mr: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <ColorizeIcon
+                        sx={{ color: '#fff', fontSize: '1rem', cursor: 'pointer' }}
+                        onClick={() => setShowTextPicker(!showTextPicker)}
+                      />
+                    </Box>
+                  ),
+                }}
+              />
+              {showTextPicker && (
+                <Box sx={{ position: 'absolute', zIndex: 2 }}>
+                  <SketchPicker
+                    color={textColor}
+                    onChangeComplete={handleTextColorChange}
+                  />
+                </Box>
+              )}
+            </Box>
+          </Box>
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{
+              backgroundColor: '#42a5f5',
+              color: '#fff',
+              textTransform: 'uppercase',
+              fontSize: '0.8rem',
+              fontWeight: 500,
+              py: 1,
+              '&:hover': { backgroundColor: '#2196f3' },
+            }}
+            onClick={handleModalClose}
+          >
+            Done
+          </Button>
+        </Box>
+      </Modal>
+
+      {/* Cards */}
       <Container
         maxWidth="sm"
         sx={{
@@ -110,125 +596,26 @@ const ThirdPage = () => {
           flexDirection: 'column',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          bgcolor: '#f5f5f5',
+          bgcolor: '#efefef',
           pt: 2,
           pb: 4,
         }}
       >
-        <Card
-          sx={{
-            width: '100%',
-            borderRadius: 2,
-            border: '1px solid rgba(0, 0, 0, 0.12)',
-            boxShadow: 1,
-            backgroundColor: '#fff',
-            mb: 1,
-          }}
-        >
-          {/* Top Bar */}
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              px: 2,
-              py: 1,
-              borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <IconButton sx={{ p: 0, mr: 1 }}>
-                <SettingsIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
-              </IconButton>
-              <IconButton sx={{ p: 0, mr: 1 }}>
-                <ContentCopyIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
-              </IconButton>
-              <IconButton sx={{ p: 0 }}>
-                <DeleteIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
-              </IconButton>
-            </Box>
-            <IconButton sx={{ p: 0 }}>
-              <MoreVertIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
-            </IconButton>
-          </Box>
-
-          {/* Image Upload Section */}
-          <Box
-            sx={{
-              backgroundColor: '#f5f5f5',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              py: 4,
-            }}
-          >
-            <IconButton>
-              <CameraAltIcon sx={{ fontSize: '3rem', color: '#666' }} />
-            </IconButton>
-          </Box>
-
-          {/* Content Section */}
-          <CardContent
-            sx={{
-              padding: 2,
-              '&:last-child': { paddingBottom: 2 },
-              position: 'relative',
-            }}
-          >
-            <Typography
-              variant="overline"
-              sx={{
-                fontSize: '0.7rem',
-                color: '#666',
-                fontWeight: 500,
-                display: 'block',
-              }}
-            >
-              REPREHENDERIT
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{
-                fontSize: '16px',
-                fontWeight: 700,
-                color: '#333',
-                mt: 0.5,
-              }}
-            >
-              Quis autem vel
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                fontSize: '0.8rem',
-                color: '#666',
-                mt: 0.5,
-              }}
-            >
-              lure reprehenderit qui in ea voluptate
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                fontSize: '0.8rem',
-                color: '#666',
-                mt: 0.5,
-              }}
-            >
-              velit esse quam nihil molestiae consequatur
-            </Typography>
-            <IconButton
-              sx={{
-                position: 'absolute',
-                bottom: 16,
-                right: 16,
-              }}
-              onClick={handleNextPage}
-            >
-              <ArrowForwardIosIcon sx={{ fontSize: '0.9rem', color: '#42a5f5' }} />
-            </IconButton>
-          </CardContent>
-        </Card>
+        {cards.length === 0 ? (
+          <IconButton onClick={handleAddCard}>
+            <AddIcon sx={{ fontSize: '3rem', color: '#42a5f5' }} />
+          </IconButton>
+        ) : (
+          cards.map((card) => (
+            <ImageCard
+              key={card.id}
+              card={card}
+              onDuplicate={handleDuplicate}
+              onDelete={handleDelete}
+              onTitleChange={handleTitleChange}
+            />
+          ))
+        )}
       </Container>
 
       {/* Bottom Bar */}

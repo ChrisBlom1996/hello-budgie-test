@@ -40,7 +40,7 @@ const CardComponent = ({ onNavigate }) => {
           flexDirection: 'column',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          bgcolor: '#f5f5f5',
+          bgcolor: '#efefef',
           pt: 2,
           pb: 4,
         }}
