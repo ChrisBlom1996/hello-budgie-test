@@ -17,7 +17,7 @@ import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import PanoramaHorizontalIcon from '@mui/icons-material/PanoramaHorizontal';
 import PortraitIcon from '@mui/icons-material/Portrait';
 
-const SecondPage = () => {
+const SecondPage = ({ onNavigate }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -29,7 +29,12 @@ const SecondPage = () => {
   };
 
   const handleCardClick = () => {
-    console.log('Card clicked - navigate to next page');
+    if (onNavigate) {
+      onNavigate();
+    } else {
+      // Fallback navigation in case onNavigate is not defined
+      navigate('/third-page');
+    }
   };
 
   const cards = [
@@ -46,7 +51,6 @@ const SecondPage = () => {
         sx={{
           backgroundColor: '#3C8DA9',
           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-          padding: '5px'
         }}
       >
         <Toolbar>
@@ -66,14 +70,13 @@ const SecondPage = () => {
           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
           px: 2,
           py: 1,
-          padding: '14px'
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton onClick={handleBack} sx={{ p: 0, mr: 1 }}>
-            <ArrowBackIosIcon sx={{ color: '#3C8DA9', fontSize: '1.2rem' }} />
+            <ArrowBackIosIcon sx={{ color: '#333', fontSize: '1.2rem' }} />
           </IconButton>
-          <Typography variant="h6" sx={{ fontWeight: 500, color: '#333', fontSize: '16px', fontWeight: '700' }}>
+          <Typography variant="h6" sx={{ fontWeight: 500, color: '#333', fontSize: '16px' }}>
             Cards
           </Typography>
         </Box>
@@ -98,8 +101,8 @@ const SecondPage = () => {
             key={index}
             sx={{
               width: '100%',
-              borderRadius: 2, // 8px
-              border: '1px solid rgba(0, 0, 0, 0.12)', // 1px border
+              borderRadius: 2,
+              border: '1px solid rgba(0, 0, 0, 0.12)',
               boxShadow: 1,
               backgroundColor: '#fff',
               mb: 1,
@@ -109,19 +112,19 @@ const SecondPage = () => {
           >
             <CardContent
               sx={{
-                padding: 2, // 16px
-                '&:last-child': { paddingBottom: 2 }, // Ensure consistent padding
+                padding: 2,
+                '&:last-child': { paddingBottom: 2 },
                 display: 'flex',
                 alignItems: 'center',
               }}
             >
               {React.cloneElement(card.icon, {
-                sx: { fontSize: { xs: 32, sm: 32 }, color: '#666', mr: 1.25 }, 
+                sx: { fontSize: { xs: 32, sm: 32 }, color: '#666', mr: 1.25 },
               })}
               <Typography
                 variant="h6"
                 sx={{
-                  fontSize: { xs: '16px', sm: '16px' }, 
+                  fontSize: { xs: '16px', sm: '16px' },
                   fontWeight: 500,
                   color: '#333',
                   flex: 1,
@@ -129,11 +132,17 @@ const SecondPage = () => {
               >
                 {card.name}
               </Typography>
-              <IconButton sx={{ p: 0, mr: 0.5 }} onClick={handleCardClick}>
+              <IconButton
+                sx={{ p: 0, mr: 0.5 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCardClick();
+                }}
+              >
                 <ArrowForwardIosIcon
                   sx={{
                     fontSize: { xs: '0.9rem', sm: '1rem' },
-                    color: '#3C8DA9',
+                    color: '#42a5f5',
                   }}
                 />
               </IconButton>
