@@ -20,7 +20,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import CameraAltIcon from '@mui/icons-material/CameraAlt'; // Fixed import
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import ColorizeIcon from '@mui/icons-material/Colorize';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -106,7 +106,7 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
           px: 2,
           py: 1,
           borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          bgcolor: '#000', // Black background for the top bar
+          bgcolor: '#000', 
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -115,8 +115,8 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
               src={CogIcon}
               alt="Cog Icon"
               style={{
-                width: 19.2, // 1.2rem (19.2px at 16px root font size)
-                height: 19.2,
+                width: 21, 
+                height: 21,
               }}
             />
           </IconButton>
@@ -179,7 +179,7 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
             src={CameraIcon}
             alt="Camera Icon"
             style={{
-              width: 48, // 3rem (48px at 16px root font size)
+              width: 48, 
               height: 48,
             }}
           />
@@ -483,7 +483,7 @@ const ThirdPage = () => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '90%',
+            width: '85%',
             maxWidth: 400,
             bgcolor: '#fff',
             borderRadius: 2,
@@ -535,7 +535,7 @@ const ThirdPage = () => {
               />
             </IconButton>
           </Box>
-          <Typography variant="overline" sx={{ fontSize: '0.7rem', color: '#666', display: 'block', mb: 1 }}>
+          <Typography variant="overline" sx={{ fontSize: '0.7rem', color: '#666', display: 'block', mb: 0 }}>
             IMAGE
           </Typography>
           <TextField
@@ -563,7 +563,7 @@ const ThirdPage = () => {
           />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
             <Box sx={{ width: '48%' }}>
-              <Typography variant="overline" sx={{ fontSize: '0.7rem', color: '#666', display: 'block', mb: 1 }}>
+              <Typography variant="overline" sx={{ fontSize: '0.7rem', color: '#666', display: 'block', mb: 0 }}>
                 BACKGROUND COLOUR
               </Typography>
               <TextField
@@ -603,7 +603,7 @@ const ThirdPage = () => {
               )}
             </Box>
             <Box sx={{ width: '48%' }}>
-              <Typography variant="overline" sx={{ fontSize: '0.7rem', color: '#666', display: 'block', mb: 1 }}>
+              <Typography variant="overline" sx={{ fontSize: '0.7rem', color: '#666', display: 'block', mb: 0 }}>
                 TEXT COLOUR
               </Typography>
               <TextField
