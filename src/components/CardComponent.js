@@ -9,8 +9,8 @@ import {
   Box,
   IconButton,
 } from '@mui/material';
-import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CardIcon from '../assets/card-icon.svg';
+import ForwardArrow from '../assets/forward-arrow.svg';
 
 const CardComponent = ({ onNavigate }) => {
   return (
@@ -40,7 +40,7 @@ const CardComponent = ({ onNavigate }) => {
           flexDirection: 'column',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          bgcolor: '#efefef',
+          bgcolor: '#f5f5f5',
           pt: 2,
           pb: 4,
         }}
@@ -48,7 +48,7 @@ const CardComponent = ({ onNavigate }) => {
         <Card
           sx={{
             width: '100%',
-            borderRadius: 2, 
+            borderRadius: 2,
             border: '1px solid rgba(0, 0, 0, 0.12)',
             boxShadow: 1,
             backgroundColor: '#fff',
@@ -58,17 +58,19 @@ const CardComponent = ({ onNavigate }) => {
         >
           <CardContent
             sx={{
-              padding: 2, 
-              '&:last-child': { paddingBottom: 2 }, 
+              padding: 2,
+              '&:last-child': { paddingBottom: 2 },
             }}
           >
             {/* First Line: Icon, Title, and Arrow */}
             <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-              <ViewAgendaOutlinedIcon
-                sx={{
-                  fontSize: { xs: 32, sm: 32 },
-                  color: '#666',
-                  mr: 1.25, // 10px
+              <img
+                src={CardIcon}
+                alt="Card Icon"
+                style={{
+                  width: 32,
+                  height: 32,
+                  marginRight: 10,
                 }}
               />
               <Typography
@@ -83,10 +85,12 @@ const CardComponent = ({ onNavigate }) => {
                 Card
               </Typography>
               <IconButton sx={{ p: 0, mr: 0.5 }} onClick={onNavigate}>
-                <ArrowForwardIosIcon
-                  sx={{
-                    fontSize: { xs: '0.9rem', sm: '1rem' },
-                    color: '#42a5f5',
+                <img
+                  src={ForwardArrow}
+                  alt="Forward Arrow"
+                  style={{
+                    width: 16,
+                    height: 16,
                   }}
                 />
               </IconButton>
@@ -98,8 +102,8 @@ const CardComponent = ({ onNavigate }) => {
               sx={{
                 fontSize: { xs: '0.7rem', sm: '0.8rem' },
                 color: '#666',
-                mt: 1.25, 
-                ml: 0, 
+                mt: 1.25,
+                ml: 0,
               }}
             >
               Interactive animated slider with navigation
