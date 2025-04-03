@@ -16,20 +16,22 @@ import {
   MenuItem,
   Backdrop,
 } from '@mui/material';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
-import SettingsIcon from '@mui/icons-material/Settings';
 import ShareIcon from '@mui/icons-material/Share';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import DeleteIcon from '@mui/icons-material/Delete';
+import SettingsIcon from '@mui/icons-material/Settings';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import AddIcon from '@mui/icons-material/Add';
+import CameraAltIcon from '@mui/icons-material/CameraAlt'; // Fixed import
 import ColorizeIcon from '@mui/icons-material/Colorize';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { SketchPicker } from 'react-color';
+import BackArrow from '../assets/back-arrow.svg';
+import ForwardArrow from '../assets/forward-arrow.svg';
+import CameraIcon from '../assets/camera-icon.svg';
+import CogIcon from '../assets/cog-icon.svg';
+import DuplicateIcon from '../assets/duplicate-icon.svg';
+import DeleteIcon from '../assets/delete-icon.svg';
+import AddIcon from '../assets/add-icon.svg';
 
 // Custom ImageCard component to manage each card and its editor
 const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
@@ -51,14 +53,12 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
   // Focus the editor when entering edit mode
   useEffect(() => {
     if (editingTitle && editor && editorRef.current) {
-      // Focus the editor programmatically
       editor.chain().focus().run();
-      // Also focus the DOM element directly
       setTimeout(() => {
         if (editorRef.current) {
           editorRef.current.focus();
         }
-      }, 100); 
+      }, 100);
     }
   }, [editingTitle, editor]);
 
@@ -86,10 +86,6 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
     setEditingTitle(false);
   };
 
-  const handleNextPage = () => {
-    console.log('Navigate to the next page');
-  };
-
   return (
     <Card
       sx={{
@@ -110,11 +106,19 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
           px: 2,
           py: 1,
           borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+          bgcolor: '#000', // Black background for the top bar
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton sx={{ p: 0, mr: 1 }} onClick={handleCogClick}>
-            <SettingsIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
+            <img
+              src={CogIcon}
+              alt="Cog Icon"
+              style={{
+                width: 19.2, // 1.2rem (19.2px at 16px root font size)
+                height: 19.2,
+              }}
+            />
           </IconButton>
           <Menu
             anchorEl={cogAnchorEl}
@@ -126,14 +130,28 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
             <MenuItem onClick={handleCogClose}>Option 3</MenuItem>
           </Menu>
           <IconButton sx={{ p: 0, mr: 1 }} onClick={() => onDuplicate(card.id)}>
-            <ContentCopyIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
+            <img
+              src={DuplicateIcon}
+              alt="Duplicate Icon"
+              style={{
+                width: 19.2,
+                height: 19.2,
+              }}
+            />
           </IconButton>
           <IconButton sx={{ p: 0 }} onClick={() => onDelete(card.id)}>
-            <DeleteIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
+            <img
+              src={DeleteIcon}
+              alt="Delete Icon"
+              style={{
+                width: 19.2,
+                height: 19.2,
+              }}
+            />
           </IconButton>
         </Box>
         <IconButton sx={{ p: 0 }} onClick={handleEllipsisClick}>
-          <MoreVertIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
+          <MoreVertIcon sx={{ color: '#fff', fontSize: '1.2rem' }} />
         </IconButton>
         <Menu
           anchorEl={ellipsisAnchorEl}
@@ -157,7 +175,14 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
         }}
       >
         <IconButton>
-          <CameraAltIcon sx={{ fontSize: '3rem', color: '#666' }} />
+          <img
+            src={CameraIcon}
+            alt="Camera Icon"
+            style={{
+              width: 48, // 3rem (48px at 16px root font size)
+              height: 48,
+            }}
+          />
         </IconButton>
       </Box>
 
@@ -193,7 +218,10 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
                   </Typography>
                 </IconButton>
                 <IconButton
-                  onClick={() => editor.chain().focus().toggleItalic().run()}
+                  onClick={() => {
+                    console.log('Toggling italic', editor);
+                    editor.chain().focus().toggleItalic().run();
+                  }}
                   sx={{ p: 0.5 }}
                 >
                   <Typography variant="body2" sx={{ fontStyle: editor.isActive('italic') ? 'italic' : 'normal' }}>
@@ -219,7 +247,7 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
             <Button
               variant="contained"
               size="small"
-              sx={{ mt: 1, backgroundColor: '#42a5f5', color: '#fff' }}
+              sx={{ mt: 1, backgroundColor: '#3C8DA9', color: '#fff' }}
               onClick={handleTitleSave}
             >
               Save
@@ -266,9 +294,17 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
             bottom: 16,
             right: 16,
           }}
-          onClick={handleNextPage}
+          onClick={() => console.log('Navigate to the next page')}
         >
-          <ArrowForwardIosIcon sx={{ fontSize: '0.9rem', color: '#42a5f5' }} />
+          <img
+            src={ForwardArrow}
+            alt="Forward Arrow"
+            style={{
+              width: 14.4,
+              height: 14.4,
+              marginRight: 10,
+            }}
+          />
         </IconButton>
       </CardContent>
     </Card>
@@ -302,10 +338,6 @@ const ThirdPage = () => {
 
   const handleClose = () => {
     navigate('/');
-  };
-
-  const handleNextPage = () => {
-    console.log('Navigate to the next page');
   };
 
   const handleSave = () => {
@@ -342,10 +374,12 @@ const ThirdPage = () => {
 
   const handleBackgroundColorChange = (color) => {
     setBackgroundColor(color.hex);
+    setShowBackgroundPicker(false);
   };
 
   const handleTextColorChange = (color) => {
     setTextColor(color.hex);
+    setShowTextPicker(false);
   };
 
   const handleDuplicate = (cardId) => {
@@ -409,7 +443,15 @@ const ThirdPage = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton onClick={handleBack} sx={{ p: 0, mr: 1 }}>
-              <ArrowBackIosIcon sx={{ color: '#333', fontSize: '1.2rem' }} />
+              <img
+                src={BackArrow}
+                alt="Back Arrow"
+                style={{
+                  width: 19.2,
+                  height: 19.2,
+                  marginRight: 10,
+                }}
+              />
             </IconButton>
             <Typography variant="h6" sx={{ fontWeight: 500, color: '#333', fontSize: '16px' }}>
               Image Cards
@@ -417,10 +459,10 @@ const ThirdPage = () => {
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton onClick={handleShare} sx={{ p: 0, mr: 1 }}>
-              <ShareIcon sx={{ color: '#42a5f5', fontSize: '1.2rem' }} />
+              <ShareIcon sx={{ color: '#3C8DA9', fontSize: '1.2rem' }} />
             </IconButton>
             <IconButton onClick={handleSettings} sx={{ p: 0 }}>
-              <SettingsIcon sx={{ color: '#42a5f5', fontSize: '1.2rem' }} />
+              <SettingsIcon sx={{ color: '#3C8DA9', fontSize: '1.2rem' }} />
             </IconButton>
           </Box>
         </Box>
@@ -454,7 +496,7 @@ const ThirdPage = () => {
               Content Banner Settings
             </Typography>
             <IconButton onClick={handleModalClose}>
-              <CloseIcon sx={{ color: '#42a5f5' }} />
+              <CloseIcon sx={{ color: '#3C8DA9' }} />
             </IconButton>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -470,13 +512,27 @@ const ThirdPage = () => {
                 borderRadius: 1,
               }}
             >
-              <CameraAltIcon sx={{ color: '#666' }} />
+              <img
+                src={CameraIcon}
+                alt="Camera Icon"
+                style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
             </Box>
             <Typography variant="body2" sx={{ color: '#333', flexGrow: 1 }}>
               hero-background.png
             </Typography>
             <IconButton sx={{ ml: 1 }}>
-              <DeleteIcon sx={{ color: '#666', fontSize: '1.2rem' }} />
+              <img
+                src={DeleteIcon}
+                alt="Delete Icon"
+                style={{
+                  width: 19.2,
+                  height: 19.2,
+                }}
+              />
             </IconButton>
           </Box>
           <Typography variant="overline" sx={{ fontSize: '0.7rem', color: '#666', display: 'block', mb: 1 }}>
@@ -591,7 +647,7 @@ const ThirdPage = () => {
             variant="contained"
             fullWidth
             sx={{
-              backgroundColor: '#42a5f5',
+              backgroundColor: '#3C8DA9',
               color: '#fff',
               textTransform: 'uppercase',
               fontSize: '0.8rem',
@@ -622,7 +678,14 @@ const ThirdPage = () => {
       >
         {cards.length === 0 ? (
           <IconButton onClick={handleAddCard}>
-            <AddIcon sx={{ fontSize: '3rem', color: '#42a5f5' }} />
+            <img
+              src={AddIcon}
+              alt="Add Icon"
+              style={{
+                width: 48,
+                height: 48,
+              }}
+            />
           </IconButton>
         ) : (
           cards.map((card) => (
@@ -651,7 +714,7 @@ const ThirdPage = () => {
         <Button
           variant="contained"
           sx={{
-            backgroundColor: '#42a5f5',
+            backgroundColor: '#3C8DA9',
             color: '#fff',
             textTransform: 'uppercase',
             fontSize: '0.8rem',
