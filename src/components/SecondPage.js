@@ -77,9 +77,9 @@ const SecondPage = ({ onNavigate }) => {
               src={BackArrow}
               alt="Back Arrow"
               style={{
-                width: 19.2, // 1.2rem (19.2px at 16px root font size)
-                height: 19.2,
-                marginRight: 10, // Add 10px margin right
+                width: 19, 
+                height: 19,
+                marginRight: 10, 
               }}
             />
           </IconButton>

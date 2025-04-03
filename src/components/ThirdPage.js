@@ -58,7 +58,7 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
         if (editorRef.current) {
           editorRef.current.focus();
         }
-      }, 100); // Slight delay to ensure the editor is rendered
+      }, 100); 
     }
   }, [editingTitle, editor]);
 
