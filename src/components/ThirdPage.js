@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   AppBar,
@@ -26,16 +26,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import AddIcon from '@mui/icons-material/Add';
-import ColorizeIcon from '@mui/icons-material/Colorize'; // Eyedropper icon
+import ColorizeIcon from '@mui/icons-material/Colorize';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { SketchPicker } from 'react-color'; // Color picker
+import { SketchPicker } from 'react-color';
 
 // Custom ImageCard component to manage each card and its editor
 const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
   const [cogAnchorEl, setCogAnchorEl] = useState(null);
   const [ellipsisAnchorEl, setEllipsisAnchorEl] = useState(null);
   const [editingTitle, setEditingTitle] = useState(false);
+  const editorRef = useRef(null);
 
   const editor = useEditor({
     extensions: [StarterKit],
@@ -46,6 +47,20 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
     },
     editable: editingTitle,
   });
+
+  // Focus the editor when entering edit mode
+  useEffect(() => {
+    if (editingTitle && editor && editorRef.current) {
+      // Focus the editor programmatically
+      editor.chain().focus().run();
+      // Also focus the DOM element directly
+      setTimeout(() => {
+        if (editorRef.current) {
+          editorRef.current.focus();
+        }
+      }, 100); // Slight delay to ensure the editor is rendered
+    }
+  }, [editingTitle, editor]);
 
   const handleCogClick = (event) => {
     setCogAnchorEl(event.currentTarget);
@@ -134,7 +149,7 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
       {/* Image Upload Section */}
       <Box
         sx={{
-          backgroundColor: '#efefef',
+          backgroundColor: '#f5f5f5',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -194,7 +209,12 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
                   </Typography>
                 </IconButton>
               </Box>
-              <EditorContent editor={editor} />
+              <EditorContent
+                editor={editor}
+                ref={editorRef}
+                contentEditable={editingTitle}
+                onFocus={() => console.log('Editor focused')}
+              />
             </Box>
             <Button
               variant="contained"
@@ -271,8 +291,8 @@ const ThirdPage = () => {
 
   // State for modal and settings
   const [modalOpen, setModalOpen] = useState(false);
-  const [backgroundColor, setBackgroundColor] = useState('#6a1b9a'); // Default purple
-  const [textColor, setTextColor] = useState('#000000'); // Default black
+  const [backgroundColor, setBackgroundColor] = useState('#6a1b9a');
+  const [textColor, setTextColor] = useState('#000000');
   const [showBackgroundPicker, setShowBackgroundPicker] = useState(false);
   const [showTextPicker, setShowTextPicker] = useState(false);
 
@@ -318,7 +338,6 @@ const ThirdPage = () => {
 
   const handleCameraClick = () => {
     console.log('Camera button clicked - implement camera functionality here');
-    // Placeholder for camera functionality
   };
 
   const handleBackgroundColorChange = (color) => {
@@ -413,7 +432,7 @@ const ThirdPage = () => {
         onClose={handleModalClose}
         BackdropComponent={Backdrop}
         BackdropProps={{
-          sx: { backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.6)' }, // Stronger blur and darker overlay
+          sx: { backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.6)' },
         }}
       >
         <Box
@@ -443,7 +462,7 @@ const ThirdPage = () => {
               sx={{
                 width: 40,
                 height: 40,
-                bgcolor: '#efefef',
+                bgcolor: '#f5f5f5',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -596,7 +615,7 @@ const ThirdPage = () => {
           flexDirection: 'column',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          bgcolor: '#efefef',
+          bgcolor: '#f5f5f5',
           pt: 2,
           pb: 4,
         }}

@@ -48,8 +48,8 @@ const CardComponent = ({ onNavigate }) => {
         <Card
           sx={{
             width: '100%',
-            borderRadius: 2, // 8px
-            border: '1px solid rgba(0, 0, 0, 0.12)', // 1px border
+            borderRadius: 2, 
+            border: '1px solid rgba(0, 0, 0, 0.12)',
             boxShadow: 1,
             backgroundColor: '#fff',
             '&:hover': { transform: 'scale(1.02)', transition: 'transform 0.2s ease' },
@@ -58,8 +58,8 @@ const CardComponent = ({ onNavigate }) => {
         >
           <CardContent
             sx={{
-              padding: 2, // 16px
-              '&:last-child': { paddingBottom: 2 }, // Ensure consistent padding
+              padding: 2, 
+              '&:last-child': { paddingBottom: 2 }, 
             }}
           >
             {/* First Line: Icon, Title, and Arrow */}
@@ -98,8 +98,8 @@ const CardComponent = ({ onNavigate }) => {
               sx={{
                 fontSize: { xs: '0.7rem', sm: '0.8rem' },
                 color: '#666',
-                mt: 1.25, // 10px
-                ml: 0, // Align with the icon (no extra margin since CardContent handles padding)
+                mt: 1.25, 
+                ml: 0, 
               }}
             >
               Interactive animated slider with navigation
