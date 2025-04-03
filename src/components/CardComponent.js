@@ -25,7 +25,7 @@ const CardComponent = ({ onNavigate }) => {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" sx={{ fontWeight: 700, color: '#333', fontSize: '16px' }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, color: '#222', fontSize: '16px' }}>
             Add a component
           </Typography>
         </Toolbar>
@@ -68,17 +68,17 @@ const CardComponent = ({ onNavigate }) => {
                 src={CardIcon}
                 alt="Card Icon"
                 style={{
-                  width: 32,
-                  height: 32,
+                  width: 42,
+                  height: 42,
                   marginRight: 10,
                 }}
               />
               <Typography
                 variant="h6"
                 sx={{
-                  fontSize: { xs: '16px', sm: '16px' },
+                  fontSize: { xs: '18px', sm: '18px' },
                   fontWeight: 500,
-                  color: '#333',
+                  color: '#222',
                   flex: 1,
                 }}
               >
@@ -89,8 +89,8 @@ const CardComponent = ({ onNavigate }) => {
                   src={ForwardArrow}
                   alt="Forward Arrow"
                   style={{
-                    width: 16,
-                    height: 16,
+                    width: 22,
+                    height: 22,
                   }}
                 />
               </IconButton>
@@ -100,7 +100,7 @@ const CardComponent = ({ onNavigate }) => {
             <Typography
               variant="body2"
               sx={{
-                fontSize: { xs: '0.7rem', sm: '0.8rem' },
+                fontSize: { xs: '14px', sm: '14px' },
                 color: '#666',
                 mt: 1.25,
                 ml: 0,

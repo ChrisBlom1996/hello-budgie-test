@@ -10,12 +10,12 @@ import {
   Card,
   CardContent,
 } from '@mui/material';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
-import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
-import PanoramaHorizontalIcon from '@mui/icons-material/PanoramaHorizontal';
-import PortraitIcon from '@mui/icons-material/Portrait';
+import BackArrow from '../assets/back-arrow.svg';
+import FullPageLandscape from '../assets/full-page-landscape.svg';
+import HalfPageLandscape from '../assets/half-page-landscape.svg';
+import HalfPagePortrait from '../assets/half-page-portrait.svg';
+import ForwardArrow from '../assets/forward-arrow.svg';
 
 const SecondPage = ({ onNavigate }) => {
   const navigate = useNavigate();
@@ -32,15 +32,14 @@ const SecondPage = ({ onNavigate }) => {
     if (onNavigate) {
       onNavigate();
     } else {
-      // Fallback navigation in case onNavigate is not defined
       navigate('/third-page');
     }
   };
 
   const cards = [
-    { name: 'Full Page Landscape', icon: <PanoramaHorizontalIcon /> },
-    { name: 'Half Page Landscape', icon: <ViewAgendaOutlinedIcon /> },
-    { name: 'Half Page Portrait', icon: <PortraitIcon /> },
+    { name: 'Full Page Landscape', icon: <img src={FullPageLandscape} alt="Full Page Landscape Icon" style={{ width: 32, height: 32 }} /> },
+    { name: 'Half Page Landscape', icon: <img src={HalfPageLandscape} alt="Half Page Landscape Icon" style={{ width: 32, height: 32 }} /> },
+    { name: 'Half Page Portrait', icon: <img src={HalfPagePortrait} alt="Half Page Portrait Icon" style={{ width: 32, height: 32 }} /> },
   ];
 
   return (
@@ -74,7 +73,15 @@ const SecondPage = ({ onNavigate }) => {
       >
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton onClick={handleBack} sx={{ p: 0, mr: 1 }}>
-            <ArrowBackIosIcon sx={{ color: '#333', fontSize: '1.2rem' }} />
+            <img
+              src={BackArrow}
+              alt="Back Arrow"
+              style={{
+                width: 19.2, // 1.2rem (19.2px at 16px root font size)
+                height: 19.2,
+                marginRight: 10, // Add 10px margin right
+              }}
+            />
           </IconButton>
           <Typography variant="h6" sx={{ fontWeight: 500, color: '#333', fontSize: '16px' }}>
             Cards
@@ -120,6 +127,7 @@ const SecondPage = ({ onNavigate }) => {
             >
               {React.cloneElement(card.icon, {
                 sx: { fontSize: { xs: 32, sm: 32 }, color: '#666', mr: 1.25 },
+                style: { marginRight: 10 }, 
               })}
               <Typography
                 variant="h6"
@@ -139,10 +147,13 @@ const SecondPage = ({ onNavigate }) => {
                   handleCardClick();
                 }}
               >
-                <ArrowForwardIosIcon
-                  sx={{
-                    fontSize: { xs: '0.9rem', sm: '1rem' },
-                    color: '#42a5f5',
+                <img
+                  src={ForwardArrow}
+                  alt="Forward Arrow"
+                  style={{
+                    width: 22,
+                    height: 22,
+                    marginRight: 10, 
                   }}
                 />
               </IconButton>
