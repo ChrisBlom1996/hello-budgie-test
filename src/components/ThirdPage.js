@@ -300,8 +300,8 @@ const ImageCard = ({ card, onDuplicate, onDelete, onTitleChange }) => {
             src={ForwardArrow}
             alt="Forward Arrow"
             style={{
-              width: 14.4,
-              height: 14.4,
+              width: 26,
+              height: 26,
               marginRight: 10,
             }}
           />
@@ -682,8 +682,8 @@ const ThirdPage = () => {
               src={AddIcon}
               alt="Add Icon"
               style={{
-                width: 48,
-                height: 48,
+                width: 32,
+                height: 32,
               }}
             />
           </IconButton>
